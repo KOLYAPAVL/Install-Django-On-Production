@@ -92,7 +92,6 @@ Creating directory and virtual env
    And activate it
    source env/bin/activate
 3) The next you should pull your project (my project name = pr)
-```
 
 ============================================================================================
 PROJECT_DIRECTORY = /home/www/projects/project
@@ -100,12 +99,12 @@ DJANGO = /home/www/projects/project/pr
 ENV = /home/www/projects/project/env
 ============================================================================================
 p.s. You can use another paths if you want it
+```
 
 
 ## First start Django
 
 ```
-# I'm in directory DJANGO
 python3.7 manage.py makemigrations
 python3.7 manage.py migrate
 python3.7 manage.py runserver 0.0.0.0:8000
