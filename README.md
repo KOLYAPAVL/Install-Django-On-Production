@@ -269,7 +269,7 @@ server {
         proxy_pass http://127.0.0.1:8001;
         proxy_set_header X-Forwarded-Host $server_name;
         proxy_set_header X-Real-IP $remote_addr;
-        add_header P3P ‘CP=‘’ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"'
+        add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
         add_header Access-Control-Allow-Origin *;
     }
     location /static {
@@ -294,7 +294,16 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Host $server_name;
-        proxy_set_header X-Forwarded-Forwarded-For $proxy_add_forwarded_for;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
 ```
+
+And restart Nginx
+```
+sudo service nginx stop
+sudo service nginx start
+```
+
+p.s. If you see error ```Job for nginx.service failed because the control process exited with error code.
+See "systemctl status nginx.service" and "journalctl -xe" for details``` try to open log ```systemctl status nginx.service``` and check error
