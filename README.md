@@ -73,7 +73,7 @@ python3.7
 Now we should install PIP
 
 ```
-sudo python3.7 -m pip install -U pip
+sudo /home/www/.python/bin/python3.7 -m pip install -U pip
 ```
 
 ## Adding project to your server
@@ -115,3 +115,55 @@ And it working... You can see your django project.
 Ok, First step was ended. We have django on our server, but this is start.
 At the next we should install gunicorn for starting django.
 
+
+
+## Installing PostgreSQL
+
+Install PostgreSQL 11 and configure locales.
+
+```
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+RELEASE=$(lsb_release -cs)
+echo "deb http://apt.postgresql.org/pub/repos/apt/ ${RELEASE}"-pgdg main | sudo tee  /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+sudo apt -y install postgresql-11
+sudo localedef ru_RU.UTF-8 -i ru_RU -fUTF-8 
+export LANGUAGE=ru_RU.UTF-8
+export LANG=ru_RU.UTF-8
+export LC_ALL=ru_RU.UTF-8
+sudo locale-gen ru_RU.UTF-8
+sudo dpkg-reconfigure locales
+```
+
+Change postges password, create clear database named dbms_db
+
+```
+sudo passwd postgres
+su - postgres
+export PATH=$PATH:/usr/lib/postgresql/11/bin
+createdb --encoding UNICODE dbms_db --username postgres
+exit
+```
+
+Create dbms db user and grand privileges to him
+```
+sudo -u postgres psql
+postgres=# ...
+create user dbms with password 'some_password';
+ALTER USER dbms CREATEDB;
+grant all privileges on database dbms_db to dbms;
+\c dbms_db
+GRANT ALL ON ALL TABLES IN SCHEMA public to dbms;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public to dbms;
+GRANT ALL ON ALL FUNCTIONS IN SCHEMA public to dbms;
+CREATE EXTENSION pg_trgm;
+ALTER EXTENSION pg_trgm SET SCHEMA public;
+UPDATE pg_opclass SET opcdefault = true WHERE opcname='gin_trgm_ops';
+\q
+exit
+```
+
+Run SQL dump, if you have
+```
+psql -h localhost dbms_db dbms < dump.sql
+```
