@@ -46,6 +46,7 @@ vim ~/.zshrc
 chsh -s $(which zsh) 
 ```
 
+## Install Python
 Installing Python (I'm install Python3.7, if you want anouther version change 3.7 on your version)
 
 ```
@@ -75,8 +76,9 @@ Now we should install PIP
 sudo python3.7 -m pip install -U pip
 ```
 
-Adding project to your server
+## Adding project to your server
 
+Creating directory and virtual env
 ```
 1) My project will be in /home/www/projects/project - (pls. remember this path)
    mkdir projects
@@ -111,5 +113,7 @@ python3.7 manage.py runserver 0.0.0.0:8000
 ```
 The next you should open your browser and write in search: yourdomain:8000
 And it working... You can see your django project
+Ok. First step was ended. We have django on our server, but this is start
+At the next we should install gunicorn for starting django.
 ```
 
