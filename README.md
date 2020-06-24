@@ -187,3 +187,59 @@ DATABASES = {
 python3.7 manage.py makemigrations
 python3.7 manage.py migrate
 ```
+
+## Gunicorn
+
+Download gunicorn
+
+```
+pip install gunicorn
+```
+
+Creating in DJANGO gunicorn config
+```
+#workers=CPU Count * 2 + 1
+#gunicorn_config.py
+command = '/home/www/projects/project/env/bin/gunicorn'
+pythonpath = '/home/www/projects/project/pr'
+bind = '127.0.0.1:8001'
+workers = 3
+user = 'www'
+limit_request_fields = 32000
+limit_request_field_size = 0
+raw_env = 'DJANGO_SETTINGS_MODULE=pr.settings'
+```
+
+Creating gunicornStarter in PROJECT
+
+```
+mkdir bin
+sudo vim start_gunicorn.sh
+#start_gunicorn.sh
+#!/bin/bash
+source /home/www/projects/project/env/bin/activate
+exec gunicorn  -c "/home/www/projects/project/pr/gunicorn_config.py" pr.wsgi
+```
+
+Starting Proccess
+
+```
+chmod +x bin/start_gunicorn.sh
+. ./bin/start_gunicorn.sh
+```
+
+and you will see if success:
+```
+[2020-06-24 19:11:09 +0000] [9506] [INFO] Starting gunicorn 20.0.4
+[2020-06-24 19:11:09 +0000] [9506] [INFO] Listening at: http://127.0.0.1:8001 (9506)
+[2020-06-24 19:11:09 +0000] [9506] [INFO] Using worker: sync
+[2020-06-24 19:11:09 +0000] [2901] [INFO] Booting worker with pid: 2901
+[2020-06-24 19:11:09 +0000] [2902] [INFO] Booting worker with pid: 2902
+[2020-06-24 19:11:09 +0000] [2903] [INFO] Booting worker with pid: 2903
+[2020-06-24 19:11:09 +0000] [2904] [INFO] Booting worker with pid: 2904
+[2020-06-24 19:11:09 +0000] [2905] [INFO] Booting worker with pid: 2905
+[2020-06-24 19:11:09 +0000] [2906] [INFO] Booting worker with pid: 2906
+[2020-06-24 19:11:10 +0000] [2907] [INFO] Booting worker with pid: 2907
+[2020-06-24 19:11:10 +0000] [2908] [INFO] Booting worker with pid: 2908
+[2020-06-24 19:11:10 +0000] [2909] [INFO] Booting worker with pid: 2909
+```
