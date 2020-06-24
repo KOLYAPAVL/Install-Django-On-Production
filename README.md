@@ -111,7 +111,7 @@ python3.7 manage.py runserver 0.0.0.0:8000
 ```
 
 The next you should open your browser and write in search: yourdomain:8000
-And it working... You can see your django project
-Ok. First step was ended. We have django on our server, but this is start
+And it working... You can see your django project.
+Ok, First step was ended. We have django on our server, but this is start.
 At the next we should install gunicorn for starting django.
 
