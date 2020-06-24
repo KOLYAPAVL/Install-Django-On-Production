@@ -167,3 +167,23 @@ Run SQL dump, if you have
 ```
 psql -h localhost dbms_db dbms < dump.sql
 ```
+
+Add PostgreSQL to Django
+```
+pip install psycopg2
+
+#settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'DB_NAME' ,
+        'USER' : 'DB_USER',
+        'PASSWORD' : 'DB_PASSWORD',
+        'HOST' : '127.0.0.1',
+        'PORT' : '5432',
+    }
+}
+
+python3.7 manage.py makemigrations
+python3.7 manage.py migrate
+```
