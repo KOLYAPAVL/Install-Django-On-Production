@@ -228,7 +228,7 @@ chmod +x bin/start_gunicorn.sh
 . ./bin/start_gunicorn.sh
 ```
 
-and you will see if success:
+And you will see if success
 ```
 [2020-06-24 19:11:09 +0000] [9506] [INFO] Starting gunicorn 20.0.4
 [2020-06-24 19:11:09 +0000] [9506] [INFO] Listening at: http://127.0.0.1:8001 (9506)
@@ -242,4 +242,59 @@ and you will see if success:
 [2020-06-24 19:11:10 +0000] [2907] [INFO] Booting worker with pid: 2907
 [2020-06-24 19:11:10 +0000] [2908] [INFO] Booting worker with pid: 2908
 [2020-06-24 19:11:10 +0000] [2909] [INFO] Booting worker with pid: 2909
+```
+
+## NGINX
+
+Go to nginx config
+```
+sudo vim /etc/nginx/sites-enabled
+# chouse default
+```
+
+Nginx config
+
+```
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    
+    root /var/www/html;
+    
+    index index.html index.htm index.nginx-debian.html;
+    
+    server_name _;
+    
+    location / {
+        proxy_pass http://127.0.0.1:8001;
+        proxy_set_header X-Forwarded-Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        add_header P3P ‘CP=‘’ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"'
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /static {
+        autoindex on;
+        alias /home/www/projects/project/pr/static/;
+    }
+    location /media {
+        autoindex on;
+        alias /home/www/projects/project/pr/media/;
+    }
+    location /sockets {
+        try_files $uri @proxy_to_ws;
+    }
+    location @proxy_to_ws {
+        proxy_pass http://127.0.0.1:8002;
+        
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Host $server_name;
+        proxy_set_header X-Forwarded-Forwarded-For $proxy_add_forwarded_for;
+    }
+}
 ```
