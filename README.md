@@ -372,6 +372,9 @@ CELERY_RESULT_SERIALIZER = 'json'
 add to conf supervisor task
 
 ```
+cd /etc/supervisor/conf.d
+sudo vim project.conf
+#project.conf
 [program:hello_celery]
 command=/home/www/projects/project/env/bin/celery -A pr worker -B -l INFO
 directory=/home/www/projects/project/pr
@@ -385,4 +388,76 @@ startsecs=10
 stopwaitsecs = 600
 killasgroup=true
 priority=998
+```
+
+check
+```
+sudo supervisorctl update
+sudo supervisorctl status
+sudo service supervisor stop
+sudo service supervisor start
+```
+
+## Django Channels
+
+redis configurate
+```
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04-ru
+```
+
+install celery
+```
+pip install daphne
+pip install channels
+pip install channels-redis
+```
+
+change config settings 
+```
+#settings.py
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+            "capacity": 2000,
+        },
+    },
+}
+```
+
+change asgi
+```
+#asgi.py
+import os
+import django
+from channels.routing import get_default_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pr.settings")
+django.setup()
+application = get_default_application()
+```
+
+add to conf supervisor task
+
+```
+cd /etc/supervisor/conf.d
+sudo vim project.conf
+#project.conf
+[program:channels]
+command = /home/www/projects/project/env/bin/daphne -b 127.0.0.1:8002 pr.asgi:application
+directory = /home/www/projects/project/pr
+autostart = true
+autorestart = true
+stopasgroup = true
+user = www
+stdout_logfile=/home/www/projects/project/channels-er.log
+```
+
+check
+```
+sudo supervisorctl update
+sudo supervisorctl status
+sudo service supervisor stop
+sudo service supervisor start
 ```
