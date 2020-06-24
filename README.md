@@ -347,3 +347,42 @@ Go to website, choose nginx and your operating system
 ```
 https://certbot.eff.org/
 ```
+
+## Celery
+
+install redis
+
+```
+sudo aptitude install redis-server
+redis-cli ping
+    PONG
+
+```
+
+settings celery
+
+```
+#settings.py
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+```
+
+add to conf supervisor task
+
+```
+[program:hello_celery]
+command=/home/www/projects/project/env/bin/celery -A pr worker -B -l INFO
+directory=/home/www/projects/project/pr
+user=www
+numproc=1
+stdout_logfile=/home/www/projects/project/celery-worker.log
+stderr_logfile=/home/www/projects/project/celery-worker.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs = 600
+killasgroup=true
+priority=998
+```
