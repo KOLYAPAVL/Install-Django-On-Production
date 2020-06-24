@@ -79,8 +79,12 @@ Adding project to your server
 
 ```
 1) My project will be in /home/www/projects/project - (pls. remember this path)
-2) In project directory I'm creating virtual env, you can do this like this:
+   mkdir projects
+   cd projects
+   mkdir project
+   cd project
 
+2) In project directory I'm creating virtual env, you can do this like this:
    python3.7 -m venv env
     
    And activate it
@@ -94,3 +98,18 @@ ENV = /home/www/projects/project/env
 ============================================================================================
 p.s. You can use another paths if you want it
 ```
+
+First start django
+
+```
+# I'm in directory DJANGO
+python3.7 manage.py makemigrations
+python3.7 manage.py migrate
+python3.7 manage.py runserver 0.0.0.0:8000
+```
+
+```
+The next you should open your browser and write in search: yourdomain:8000
+And it working... You can see your django project
+```
+
