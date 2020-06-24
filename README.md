@@ -307,3 +307,43 @@ sudo service nginx start
 
 p.s. If you see error ```Job for nginx.service failed because the control process exited with error code.
 See "systemctl status nginx.service" and "journalctl -xe" for details``` try to open log ```systemctl status nginx.service``` and check error
+
+
+## Supervisor
+
+Go to config
+
+```
+cd /etc/supervisor/conf.d
+sudo vim project.conf
+#project.conf
+
+[program:program]
+command=/home/www/projects/project/bin/start_gunicorn.sh
+user=www
+process_name=%(program_name)s
+numprocs=1
+autostart=true
+autorestart=true
+redirect_stderr=true
+```
+
+And restart supervisor
+
+```
+sudo supervisorctl update
+sudo service supervisor stop
+sudo service supervisor start
+```
+
+Check your website :)
+```
+If all ok, you can see your django website
+```
+
+## Adding Ssl
+
+Go to website, choose nginx and your operating system
+```
+https://certbot.eff.org/
+```
