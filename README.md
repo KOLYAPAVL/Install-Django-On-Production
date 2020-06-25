@@ -405,6 +405,12 @@ redis configurate
 https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04-ru
 ```
 
+alowed hosts
+```
+#settings.py
+ALLOWED_HOSTS = ['YOUR_IP','127.0.0.1','https://YOUR_DAMAIN','YOUR_DOMAIN']
+```
+
 install celery
 ```
 pip install daphne
