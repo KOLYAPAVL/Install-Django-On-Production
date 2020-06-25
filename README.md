@@ -1,5 +1,57 @@
-# Django (Debiah) install on production server
+# Django (Debian) install on production server
 This my tasklist about how to install django on production server and connect libraries for correct working it.
+
+## Files
+
+```
+SERVER
+|
+home
+    |
+    www
+       |
+       projects
+              | 
+              project
+                     |
+                     bin
+                        |
+                        start_gunicorns.h
+                     pr
+                       |
+                        gunicorn_config.py
+                        # .. another django files
+                     env
+                        |
+                         #virt env files
+                     celery-worker.log
+                     channels-er.log
+        .python
+        .oh-my-zsh
+        # .. another packages
+etc
+   |
+   nginx
+        |
+        sites-enabled
+                     |
+                     default #nginx config
+   supervisor
+            |
+            conf.d
+                  |
+                  project.conf #supervisor config
+                  # .. another configs
+      
+var
+   |
+    log 
+       |
+        redis #redis logs
+        nginx #nginx logs
+        supervisor #supervisor logs
+        # .. another logs
+```
 
 ## Requirements
 
