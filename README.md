@@ -445,7 +445,7 @@ cd /etc/supervisor/conf.d
 sudo vim project.conf
 #project.conf
 [program:channels]
-command = /home/www/projects/project/env/bin/daphne -b 127.0.0.1:8002 pr.asgi:application
+command = /home/www/projects/project/env/bin/daphne -b 127.0.0.1 -p 8002 pr.asgi:application
 directory = /home/www/projects/project/pr
 autostart = true
 autorestart = true
