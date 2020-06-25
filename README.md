@@ -471,6 +471,21 @@ sudo service supervisor start
 
 ## Django Settings
 
+Debug
+```
+#settings.py
+DEBUG = False
+```
+
+Static 
+```
+#settings.py
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+```
+
 Collect static
 ```
 python3.7 manage.py collectstatic
@@ -478,6 +493,8 @@ python3.7 manage.py collectstatic
 
 Cache settings
 ```
+#settings.py
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
