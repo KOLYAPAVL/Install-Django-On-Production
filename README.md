@@ -1,6 +1,26 @@
 # Django (Debian) install on production server
 This my tasklist about how to install django on production server and connect libraries for correct working it.
 
+## Contents
+
+```
+[start:end] - Name
+11:61 - Files
+64:72 - Requirements
+75:108 - Install Packages / Creating user
+110:138 - Install Python
+141:164 - Adding project to your server
+167:178 - First start Django
+184:254 - Installing PostgreSQL
+256:311 - Gunicorn
+313:375 - NGINX
+379:408 - Supervisor
+412:417 - Adding Ssl
+419:468 - Celery
+471:539 - Django Channels
+543:592 - Django Settings
+```
+
 ## Files
 
 ```
