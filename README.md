@@ -487,6 +487,12 @@ CACHES = {
         }
     }
 }
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+)
 ```
 
 Autoreboot server (if you want)
