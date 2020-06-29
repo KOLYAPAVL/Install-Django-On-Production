@@ -122,7 +122,6 @@ chsh -s $(which zsh)
 Installing Python (I'm install Python3.7, if you want anouther version change 3.7 on your version)
 
 ```
-mkdir ~/code
 wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
 tar xvf Python-3.7.*
 cd Python-3.7.3 
